@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RK Flora — Flower Shop</title>
+  <style>
+    :root { --green:#526b55; --forest:#20382e; --cream:#f8f5ef; --pink:#b98778; --sage:#edf0e8; --ink:#343a33; --gold:#b59a6a; --muted:#777a70; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:82px; }
+    body { margin:0; font-family:Georgia,"Times New Roman",serif; background:var(--cream); color:var(--ink); }
+    header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; min-height:78px; padding:12px 7%; background:rgba(248,245,239,.97); border-bottom:1px solid rgba(181,154,106,.38); box-shadow:0 5px 22px rgba(32,56,46,.08); backdrop-filter:blur(12px); }
+    .brand { white-space:nowrap; font-size:24px; font-weight:bold; color:var(--forest); letter-spacing:1.6px; text-transform:uppercase; }
+    nav { display:flex; align-items:center; }
+    nav a { color:#5f675e; text-decoration:none; margin-left:16px; font: bold 10px Arial,sans-serif; letter-spacing:.8px; text-transform:uppercase; white-space:nowrap; transition:color .2s; }
+    nav a:hover { color:var(--pink); }
+    .order-link { margin-left:18px; padding:13px 15px; background:var(--forest); color:var(--cream) !important; text-decoration:none; letter-spacing:1.2px; border:1px solid var(--gold); }
+    .order-link:hover { background:#314b3d; }
+    .hero { position:relative; min-height:610px; display:grid; place-items:center; text-align:center; padding:70px 20px;
+      background:linear-gradient(90deg,rgba(23,43,34,.68),rgba(23,43,34,.25),rgba(23,43,34,.5)), url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1800&q=90') center/cover; color:white; }
+    .hero::after { content:""; position:absolute; inset:18px; border:1px solid rgba(231,211,172,.56); pointer-events:none; }
+    .hero h1 { max-width:850px; margin:0 auto 16px; font-size:clamp(48px,7vw,82px); font-weight:normal; line-height:1.05; letter-spacing:-1.5px; text-shadow:0 3px 24px rgba(0,0,0,.32); }
+    .hero p { margin:0; color:#f3e8d5; font-size:18px; letter-spacing:1px; }
+    .btn { display:inline-block; margin-top:28px; border:1px solid var(--gold); border-radius:0; padding:15px 32px; background:var(--pink); color:#fff; text-decoration:none; font: bold 11px Arial,sans-serif; letter-spacing:1.8px; text-transform:uppercase; cursor:pointer; transition:transform .2s,background .2s; }
+    .btn:hover { transform:translateY(-2px); background:#9f6f63; }
+    section { max-width:1180px; margin:auto; padding:82px 24px 92px; }
+    .about-section { max-width:none; background:#fdfbf7; border-top:1px solid #e8e1d5; border-bottom:1px solid #e8e1d5; }
+    .about-inner { max-width:1080px; margin:auto; display:grid; grid-template-columns:.85fr 1.15fr; gap:72px; align-items:center; }
+    .about-heading h2 { margin:18px 0 0; text-align:left; line-height:1.16; }
+    .about-heading h2::after { margin:20px 0 0; }
+    .about-copy p { margin:0 0 18px; color:#697168; font:15px/1.85 Arial,sans-serif; }
+    .about-cta { display:inline-block; margin-top:5px; color:#8d7048; font: bold 11px Arial,sans-serif; letter-spacing:1.2px; text-decoration:none; text-transform:uppercase; }
+    .about-cta:hover { color:var(--pink); }
+    h2 { margin:0 0 38px; text-align:center; font-size:clamp(32px,4vw,44px); font-weight:normal; letter-spacing:.3px; color:var(--forest); }
+    h2::after { content:""; display:block; width:54px; height:1px; margin:18px auto 0; background:var(--gold); }
+    .filters { display:flex; justify-content:center; flex-wrap:wrap; gap:9px; margin-bottom:30px; }
+    .filter { border:1px solid #d9d4c8; border-radius:0; padding:11px 18px; background:transparent; color:#5f675e; font: bold 10px Arial,sans-serif; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; cursor:pointer; transition:all .2s; }
+    .filter:hover,.filter.active { background:var(--forest); border-color:var(--forest); color:white; }
+    #shop > p { margin:0 0 28px; text-align:center; color:var(--muted); font:13px/1.6 Arial,sans-serif; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+    .card { background:#fffdfa; border:1px solid #e8e1d5; border-radius:0; overflow:hidden; box-shadow:0 7px 22px rgba(32,56,46,.055); transition:transform .25s,box-shadow .25s; }
+    .card:hover { transform:translateY(-5px); box-shadow:0 16px 30px rgba(32,56,46,.13); }
+    .card img { width:100%; height:230px; object-fit:cover; display:block; transition:transform .5s; }
+    .card:hover img { transform:scale(1.035); }
+    .card > div { padding:20px 21px 22px; }
+    .card h3 { margin:0 0 10px; color:var(--forest); font-size:19px; font-weight:normal; }
+    .card p { min-height:78px; margin:0; color:var(--muted); font:13px/1.65 Arial,sans-serif; }
+    .price { color:var(--green); font-weight:bold; }
+    .card .product-price { margin-top:14px; color:#947348; font: bold 14px Arial,sans-serif; letter-spacing:.3px; }
+    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+    .tag { background:#f0ece3; color:#697160; padding:7px 9px; font: bold 9px Arial,sans-serif; letter-spacing:1px; }
+    .decorations { max-width:none; background:#e9ede5; }
+    .decorations h2 { max-width:1180px; margin:0 auto 38px; }
+    .decoration-grid { max-width:1132px; margin:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .decoration { position:relative; min-height:370px; border-radius:0; overflow:hidden; background-size:cover; background-position:center; box-shadow:0 12px 30px rgba(32,56,46,.14); }
+    .decoration::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,37,29,.03) 30%,rgba(20,37,29,.78)); }
+    .decoration:nth-child(1) { background-image:url('https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=900&q=85'); }
+    .decoration:nth-child(2) { background-image:url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=85'); }
+    .decoration:nth-child(3) { background-image:url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=900&q=85'); }
+    .decoration-label { position:absolute; z-index:1; left:26px; right:20px; bottom:24px; color:white; }
+    .decoration-label h3 { margin:0 0 8px; font-size:25px; font-weight:normal; }
+    .decoration-label p { margin:0; color:#eee7d9; font:13px/1.6 Arial,sans-serif; }
+    .floral-divider { height:70px; margin:-35px 0; text-align:center; font-size:48px; line-height:70px; filter:saturate(.8); pointer-events:none; }
+    .floral-divider span { display:inline-block; transform:rotate(-8deg); }
+    .floral-divider span:last-child { transform:rotate(8deg); }
+    .enquiry-section { max-width:none; padding:88px 24px; background:#fdfbf7; border-top:1px solid #e8e1d5; }
+    .enquiry-layout { max-width:1120px; margin:auto; display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; align-items:start; }
+    .enquiry-intro { padding-top:4px; }
+    .eyebrow { color:#9a7951; font: bold 10px Arial,sans-serif; letter-spacing:2.4px; }
+    .enquiry-intro h2 { margin:28px 0 22px; color:var(--forest); text-align:left; font-size:clamp(34px,4vw,48px); line-height:1.15; }
+    .enquiry-intro h2::after { margin:18px 0 0; }
+    .enquiry-intro h2 em { color:#a47b6c; font-weight:normal; }
+    .enquiry-intro > p { color:#697168; font:15px/1.8 Arial,sans-serif; }
+    .contact-item { display:flex; gap:14px; align-items:flex-start; margin-top:25px; color:var(--forest); font:14px/1.6 Arial,sans-serif; }
+    .contact-icon { width:40px; height:40px; flex:none; display:grid; place-items:center; background:#ebe9df; color:#98794f; }
+    .contact-item small { display:block; margin-bottom:3px; color:#8b897f; font-size:10px; letter-spacing:1.3px; }
+    .contact-item a { color:var(--forest); text-decoration:none; }
+    .order-form { padding:30px; border:1px solid #e6dfd3; background:#fffdfa; box-shadow:0 12px 35px rgba(32,56,46,.06); font-family:Arial,sans-serif; }
+    .form-error { display:none; margin:0 0 18px; padding:14px 16px; border:1px solid #efcaca; background:#fcf0f0; color:#b53d3d; font-size:14px; }
+    .form-error.visible { display:block; }
+    .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 16px; }
+    .field { min-width:0; }
+    .field.full { grid-column:1/-1; }
+    .field label { display:block; margin-bottom:9px; color:#827e73; font-size:10px; letter-spacing:1px; }
+    .field input,.field select { width:100%; min-height:46px; padding:0 15px; border:1px solid #e5dfd4; border-radius:0; background:#faf8f3; color:var(--forest); font:14px Arial,sans-serif; }
+    .field input:focus,.field select:focus { outline:1px solid var(--gold); outline-offset:0; }
+    .flower-rows { display:grid; gap:10px; }
+    .flower-row { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(70px,.9fr) minmax(100px,.9fr) auto; gap:8px; align-items:center; }
+    .flower-row input,.flower-row select { width:100%; min-width:0; height:46px; padding:0 13px; border:1px solid #e5dfd4; border-radius:0; background:#faf8f3; color:var(--forest); font:14px Arial,sans-serif; }
+    .flower-row input:focus,.flower-row select:focus { outline:1px solid var(--gold); }
+    .remove-flower { border:0; background:transparent; color:#9b665b; cursor:pointer; font-size:20px; }
+    .add-flower { width:100%; margin-top:16px; padding:13px; border:1px dashed #b6a27f; background:transparent; color:var(--forest); font: bold 11px Arial,sans-serif; letter-spacing:.8px; cursor:pointer; }
+    .add-flower:hover { background:#f2efe7; }
+    .send-enquiry { width:100%; margin-top:16px; padding:18px; border:1px solid var(--gold); background:var(--forest); color:white; font: bold 11px Arial,sans-serif; letter-spacing:1.5px; cursor:pointer; }
+    .send-enquiry:hover { background:#314b3d; }
+    footer { text-align:center; padding:36px; background:var(--forest); color:#f3eee4; font-size:14px; line-height:1.8; }
+    footer a { color:white; font-weight:bold; text-decoration:none; }
+    .whatsapp { position:fixed; right:24px; bottom:24px; z-index:5; width:58px; height:58px; border:1px solid rgba(255,255,255,.55); border-radius:50%; display:grid; place-items:center; background:var(--forest); color:white; font: bold 10px Arial,sans-serif; text-decoration:none; box-shadow:0 6px 20px rgba(0,0,0,.2); }
+    @media(max-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:800px){ .enquiry-layout{grid-template-columns:1fr;gap:40px} .about-inner{grid-template-columns:1fr;gap:28px} }
+    @media(max-width:700px){ header{padding:12px 5%} nav a{display:none} .hero{min-height:500px} .hero::after{inset:12px} .hero h1{font-size:42px} .grid,.decoration-grid{grid-template-columns:1fr} .decoration{min-height:300px} .order-link{display:block} .order-form{padding:20px 14px} .flower-row{grid-template-columns:minmax(0,1.5fr) minmax(60px,.7fr) minmax(90px,.9fr)} .remove-flower{grid-column:3;justify-self:end} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">RK Flora</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#shop">Our Flowers</a>
+      <a href="#decorations">How We Work</a>
+      <a href="#contact">Contact</a>
+      <a href="tel:+918072818032">8072818032</a>
+      <a class="order-link" href="#contact">PLACE ORDER</a>
+    </nav>
+  </header>
+  <main>
+    <div class="hero">
+      <div><h1>Flowers for every moment</h1><p>Fresh bouquets, thoughtfully arranged.</p><a class="btn" href="#shop">Shop Flowers</a></div>
+    </div>
+    <section class="about-section" id="about">
+      <div class="about-inner">
+        <div class="about-heading">
+          <span class="eyebrow">ABOUT RK FLORA</span>
+          <h2>Fresh flowers.<br>Thoughtful moments.</h2>
+        </div>
+        <div class="about-copy">
+          <p>At RK Flora, we believe flowers have a special way of making everyday moments meaningful. Based in Hosur, we offer fresh blooms, premium varieties, greens, and florist essentials for gifts, celebrations, and floral designs.</p>
+          <p>From a simple bouquet to flowers for a wedding or event, we’re here to help you choose the right blooms. Availability and prices change daily—message us for current details.</p>
+          <a class="about-cta" href="#contact">Talk to our florist →</a>
+        </div>
+      </div>
+    </section>
+    <section id="shop">
+      <h2>Our Flowers</h2>
+      <div class="filters">
+        <button class="filter active">All Varieties</button>
+        <button class="filter" data-category="Roses">Roses</button>
+        <button class="filter" data-category="Cut Flowers">Cut Flowers</button>
+        <button class="filter" data-category="Foliage &amp; Fillers">Foliage &amp; Fillers</button>
+        <button class="filter" data-category="Exotic &amp; Premium">Exotic &amp; Premium</button>
+        <button class="filter" data-category="Florist Supplies">Florist Supplies</button>
+      </div>
+      <p>Fresh flowers and florist essentials. For enquiries and today’s prices, please message us on WhatsApp.</p>
+      <div class="grid" id="product-grid"></div>
+    </section>
+    <div class="floral-divider" aria-hidden="true"><span>🌸</span> <span>🌿</span> <span>🌷</span></div>
+    <section class="decorations" id="decorations">
+      <h2>Flower Decorations</h2>
+      <div class="decoration-grid">
+        <article class="decoration">
+          <div class="decoration-label"><h3>Wedding Florals</h3><p>Elegant flowers for your special day.</p></div>
+        </article>
+        <article class="decoration">
+          <div class="decoration-label"><h3>Table Arrangements</h3><p>Fresh and colorful dining decorations.</p></div>
+        </article>
+        <article class="decoration">
+          <div class="decoration-label"><h3>Festive Decorations</h3><p>Beautiful floral styling for every celebration.</p></div>
+        </article>
+      </div>
+    </section>
+    <section class="enquiry-section" id="contact">
+      <div class="enquiry-layout">
+        <div class="enquiry-intro">
+          <span class="eyebrow">GET IN TOUCH</span>
+          <h2>Place an order or <em>enquire</em></h2>
+          <p>Whether you need flowers for a special occasion or a regular supply, send us your requirements and we’ll get back to you.</p>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">☎</span>
+            <div><small>WHATSAPP / CALL</small><a href="tel:+918072818032">+91 80728 18032</a></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">◷</span>
+            <div><small>AVAILABILITY &amp; PRICES</small>Message us to check today’s flowers and prices.</div>
+          </div>
+        </div>
+        <form class="order-form" id="order-form" novalidate>
+          <p class="form-error" id="form-error" role="alert">Please fill in your name, phone, order type, and at least one flower with quantity.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="customer-name">YOUR NAME</label>
+              <input id="customer-name" name="name" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="customer-phone">PHONE / WHATSAPP</label>
+              <input id="customer-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="field full">
+              <label for="business-name">BUSINESS / SHOP NAME (OPTIONAL)</label>
+              <input id="business-name" name="business" placeholder="Your shop or business">
+            </div>
+            <div class="field">
+              <label for="order-type">ORDER TYPE</label>
+              <select id="order-type" name="type" required>
+                <option value="">Choose order type</option>
+                <option>Wedding / Event Decoration</option>
+                <option>Shop / Regular Supply</option>
+                <option>Personal / Gift</option>
+                <option>Bulk Flowers</option>
+                <option>Other Enquiry</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="delivery-location">DELIVERY LOCATION</label>
+              <input id="delivery-location" name="location" placeholder="City or delivery address">
+            </div>
+            <div class="field full">
+              <label>FLOWERS NEEDED &amp; APPROXIMATE QUANTITY</label>
+              <div class="flower-rows" id="flower-rows">
+                <div class="flower-row">
+                  <input name="flower" aria-label="Flower name" placeholder="e.g. Rose (red)" required>
+                  <input name="quantity" type="number" aria-label="Quantity" placeholder="Qty" min="1" required>
+                  <select name="unit" aria-label="Quantity unit">
+                    <option>Bundle</option>
+                    <option>Stems</option>
+                    <option>Bunch</option>
+                    <option>Kg</option>
+                  </select>
+                </div>
+              </div>
+              <button class="add-flower" id="add-flower" type="button">+ Add another flower</button>
+            </div>
+            <div class="field full">
+              <button class="send-enquiry" type="submit">SEND ENQUIRY →</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer>
+    RK Flora • Fresh flowers, delivered with care<br>
+    Call or WhatsApp: <a href="https://wa.me/918072818032">8072818032</a>
+  </footer>
+  <a class="whatsapp" href="https://wa.me/918072818032?text=Hello%20RK%20Flora" aria-label="Contact RK Flora on WhatsApp">WhatsApp</a>
+  <script>
+    const productGroups = [
+      {
+        category: "Roses",
+        image: "https://images.unsplash.com/photo-1495231916356-a86217efff12?auto=format&fit=crop&w=700&q=80",
+        description: "Fresh rose varieties for bouquets, gifting, and floral arrangements.",
+        items: [["Red Rose", "₹300"], ["Colour Rose", "₹400"], ["Yellow Rose", "₹400"], ["Rockstar", "₹300"], ["N.B. Bless", "₹400"], ["White Rose", "₹400"], ["Hotshot", "₹400"], ["Anna Karenna", "₹400"], ["Peach Rose", "₹400"], ["Jumilia", "₹400"], ["Revival", "₹400"], ["Sword", "₹400"], ["Karanja", "₹400"], ["Purple Rose", "₹400"]]
+      },
+      {
+        category: "Cut Flowers",
+        image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=700&q=80",
+        description: "Fresh cut flowers for bouquets and everyday arrangements.",
+        items: [["Hybrid Flower – White", "₹220"], ["Hybrid Flower – Colour", "₹250"], ["Button Flower", "₹280"], ["Green Button", "₹300"], ["Santini", "₹280"], ["Tiger", "₹280"], ["Gypsophila", "₹90"], ["Gerbera Mix", "₹90"], ["Gerbera – White", "₹120"], ["Carnation", "₹260"], ["White Carnation", "₹300"], ["Spray Carnation", "Price on enquiry"], ["Sunflower", "₹200"], ["Tuberose", "₹400"], ["Blue Daisy", "₹120"], ["White Daisy (Buskin)", "₹120"], ["Yellow Paper", "₹100"], ["Purple Daisy", "₹120"], ["Pink Daisy", "₹130"], ["Orange Daisy", "₹100"], ["Golden Rod", "₹50"]]
+      },
+      {
+        category: "Exotic & Premium",
+        image: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=700&q=80",
+        description: "Premium and specialty flowers for distinctive designs.",
+        items: [["White Orchid", "Price on enquiry"], ["Purple Orchid", "Price on enquiry"], ["Asiatic Lily", "₹800"], ["Oriental White Lily", "₹900"], ["Hydrangea", "Price on enquiry"], ["Astomia", "₹200"], ["Anthurium", "₹80–₹100"], ["Fish Tail", "₹100"]]
+      },
+      {
+        category: "Foliage & Fillers",
+        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=700&q=80",
+        description: "Greens and fillers to add texture and volume to floral designs.",
+        items: [["Brassica", "₹60"], ["Ribbon Dracaena", "₹80"], ["Baby Dollar", "₹200"], ["Arika", "₹40"], ["Song of India", "₹40"], ["Song of Jamaica", "₹40"], ["Dracaena", "₹40"], ["Janda 50s", "₹100"], ["Mini Fern", "₹100"], ["Fish Leaf", "₹70"], ["Ivy Leaf", "₹70"], ["Leather Leaf", "₹70"], ["Kamini", "₹70"], ["Bodo Carpus", "₹70"], ["Asparagus", "₹30"], ["Anthurium Leaf", "₹30"], ["Ginger Lily", "₹70"], ["Monstera Leaf", "₹25 / stick"]]
+      },
+      {
+        category: "Florist Supplies",
+        image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=700&q=80",
+        description: "Supplies for professional floral arrangements and displays.",
+        items: [["Kolkata Box", "₹1,300"], ["Foam Box (OASIS) Box", "₹500"], ["Foam Box – OAFODIL", "Price on enquiry"]]
+      }
+    ];
+
+    const productGrid = document.getElementById("product-grid");
+    productGroups.forEach(function (group) {
+      group.items.forEach(function (item) {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.dataset.category = group.category;
+
+        const image = document.createElement("img");
+        image.src = group.image;
+        image.alt = item[0];
+        image.loading = "lazy";
+
+        const details = document.createElement("div");
+        const title = document.createElement("h3");
+        title.textContent = item[0];
+        const description = document.createElement("p");
+        description.textContent = group.description;
+        const price = document.createElement("div");
+        price.className = "product-price";
+        price.textContent = item[1];
+        const tags = document.createElement("div");
+        tags.className = "tags";
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = group.category.toUpperCase();
+
+        tags.appendChild(tag);
+        details.append(title, description, price, tags);
+        card.append(image, details);
+        productGrid.appendChild(card);
+      });
+    });
+
+    document.querySelector(".filters").addEventListener("click", function (event) {
+      const filter = event.target.closest(".filter");
+      if (!filter) return;
+
+      document.querySelectorAll(".filter").forEach(function (button) {
+        button.classList.toggle("active", button === filter);
+      });
+      const category = filter.dataset.category;
+      productGrid.querySelectorAll(".card").forEach(function (card) {
+        card.hidden = category && card.dataset.category !== category;
+      });
+    });
+
+    const flowerRows = document.getElementById("flower-rows");
+    const form = document.getElementById("order-form");
+    const formError = document.getElementById("form-error");
+
+    document.getElementById("add-flower").addEventListener("click", function () {
+      const row = document.createElement("div");
+      row.className = "flower-row";
+      row.innerHTML = '<input name="flower" aria-label="Flower name" placeholder="e.g. Rose (red)" required><input name="quantity" type="number" aria-label="Quantity" placeholder="Qty" min="1" required><select name="unit" aria-label="Quantity unit"><option>Bundle</option><option>Stems</option><option>Bunch</option><option>Kg</option></select><button class="remove-flower" type="button" aria-label="Remove flower">×</button>';
+      flowerRows.appendChild(row);
+      row.querySelector("input").focus();
+    });
+
+    flowerRows.addEventListener("click", function (event) {
+      if (event.target.matches(".remove-flower")) {
+        event.target.closest(".flower-row").remove();
+      }
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const rows = Array.from(flowerRows.querySelectorAll(".flower-row"));
+      const flowersValid = rows.length > 0 && rows.every(function (row) {
+        const flower = row.querySelector('[name="flower"]').value.trim();
+        const quantity = Number(row.querySelector('[name="quantity"]').value);
+        return flower.length > 0 && Number.isInteger(quantity) && quantity > 0;
+      });
+
+      if (!form.checkValidity() || !flowersValid || !document.getElementById("customer-name").value.trim() || !document.getElementById("customer-phone").value.trim()) {
+        formError.classList.add("visible");
+        const invalidField = form.querySelector(":invalid") || form.querySelector("#customer-name");
+        invalidField.focus();
+        return;
+      }
+
+      formError.classList.remove("visible");
+      const data = new FormData(form);
+      const flowerDetails = rows.map(function (row) {
+        return "- " + row.querySelector('[name="flower"]').value.trim() + ": " +
+          row.querySelector('[name="quantity"]').value + " " + row.querySelector('[name="unit"]').value;
+      }).join("\n");
+      const message = [
+        "Hello RK Flora, I’d like to make an enquiry.",
+        "Name: " + data.get("name"),
+        "Phone / WhatsApp: " + data.get("phone"),
+        "Business: " + (data.get("business") || "Not provided"),
+        "Order type: " + data.get("type"),
+        "Delivery location: " + (data.get("location") || "Not provided"),
+        "Flowers needed:",
+        flowerDetails
+      ].join("\n");
+      window.location.href = "https://wa.me/918072818032?text=" + encodeURIComponent(message);
+    });
+  </script>
+</body>
+</html>
